@@ -77,6 +77,7 @@ export const project = {
     "Personal frontend project. No custom backend or checkout system.",
   disclaimer:
     "Independent project inspired by ASOS. Not affiliated with or endorsed by ASOS.",
+  liveUrl: "https://asos-remake.vercel.app/",
   repositoryUrl: "https://github.com/DanTeAmo/Asos-Remake",
 };
 export const credentials = [

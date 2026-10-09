@@ -351,9 +351,19 @@ function SelectedProjects() {
               <dd>{project.technologies}</dd>
             </div>
           </dl>
-          <a className="text-link" href={project.repositoryUrl}>
-            GitHub Repository <Arrow />
-          </a>
+          <div className="project-actions">
+            <a
+              className="button primary"
+              href={project.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Live demo <Arrow />
+            </a>
+            <a className="text-link" href={project.repositoryUrl}>
+              GitHub Repository <Arrow />
+            </a>
+          </div>
         </div>
         <div className="showcase">
           {screenshots.map((shot, index) => (
