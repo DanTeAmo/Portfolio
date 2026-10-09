@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://portfolio-virid-tau-nq95tudinz.vercel.app/sitemap.xml
