@@ -28,18 +28,83 @@ function Label({ number, children }: { number: string; children: ReactNode }) {
 }
 function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [enhanced, setEnhanced] = useState(false);
+  const disclosure = useRef<HTMLDetailsElement>(null);
+  const panel = useRef<HTMLElement>(null);
+  const animation = useRef<Animation | null>(null);
+  const desiredOpen = useRef(false);
   const menu = useRef<HTMLElement>(null);
   const wordmark = useRef<HTMLAnchorElement>(null);
+
+  function setMenu(next: boolean, immediate = false) {
+    const details = disclosure.current;
+    const nav = panel.current;
+    if (!details || !nav) return;
+    desiredOpen.current = next;
+    setOpen(next);
+
+    // Read the interrupted position before cancelling, so rapid clicks reverse smoothly.
+    const current = animation.current ? getComputedStyle(nav) : null;
+    const from = current
+      ? { opacity: current.opacity, transform: current.transform }
+      : {
+          opacity: next ? 0 : 1,
+          transform: next ? "translateY(-6px)" : "translateY(0)",
+        };
+    animation.current?.cancel();
+    animation.current = null;
+    nav.inert = !next;
+    if (next) nav.removeAttribute("aria-hidden");
+    else nav.setAttribute("aria-hidden", "true");
+
+    if (
+      immediate ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      !nav.animate
+    ) {
+      details.open = next;
+      return;
+    }
+    if (next) details.open = true;
+    if (!details.open) return;
+    const motion = nav.animate(
+      [
+        from,
+        {
+          opacity: next ? 1 : 0,
+          transform: next ? "translateY(0)" : "translateY(-6px)",
+        },
+      ],
+      { duration: next ? 220 : 170, easing: "cubic-bezier(0.22, 1, 0.36, 1)" },
+    );
+    animation.current = motion;
+    motion.onfinish = () => {
+      if (animation.current !== motion) return;
+      animation.current = null;
+      if (!desiredOpen.current) details.open = false;
+    };
+  }
   useEffect(() => {
+    setEnhanced(true);
     const mq = matchMedia("(min-width: 1024px)");
     const resize = () => {
       if (mq.matches) {
-        if (document.activeElement === menu.current) wordmark.current?.focus();
-        setOpen(false);
+        if (disclosure.current?.contains(document.activeElement))
+          wordmark.current?.focus();
+        setMenu(false, true);
       }
     };
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    const motionPreference = () => {
+      if (reduced.matches) setMenu(desiredOpen.current, true);
+    };
     mq.addEventListener("change", resize);
-    return () => mq.removeEventListener("change", resize);
+    reduced.addEventListener("change", motionPreference);
+    return () => {
+      mq.removeEventListener("change", resize);
+      reduced.removeEventListener("change", motionPreference);
+      animation.current?.cancel();
+    };
   }, []);
   const links = navigation.map((item) => (
     <a
@@ -49,7 +114,7 @@ function SiteHeader() {
         if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
           return;
         event.preventDefault();
-        setOpen(false);
+        setMenu(false);
         history.pushState(null, "", `#${item.toLowerCase()}`);
         document
           .querySelector<HTMLElement>(`#${item.toLowerCase()} h2`)
@@ -65,7 +130,7 @@ function SiteHeader() {
       className="site-header"
       onKeyDown={(event) => {
         if (event.key === "Escape" && open) {
-          setOpen(false);
+          setMenu(false);
           menu.current?.focus();
         }
       }}
@@ -77,20 +142,21 @@ function SiteHeader() {
         <nav className="desktop-navigation" aria-label="Main navigation">
           {links}
         </nav>
-        <details
-          className="mobile-navigation"
-          open={open}
-          onToggle={(event) => setOpen(event.currentTarget.open)}
-        >
+        <details ref={disclosure} className="mobile-navigation">
           <summary
             ref={menu}
             className="menu-toggle"
             aria-controls="navigation"
+            aria-expanded={enhanced ? open : undefined}
+            onClick={(event) => {
+              event.preventDefault();
+              setMenu(!desiredOpen.current);
+            }}
           >
             {open ? "Close" : "Menu"}{" "}
             <span aria-hidden="true">{open ? "−" : "+"}</span>
           </summary>
-          <nav id="navigation" aria-label="Main navigation">
+          <nav ref={panel} id="navigation" aria-label="Main navigation">
             {links}
           </nav>
         </details>
