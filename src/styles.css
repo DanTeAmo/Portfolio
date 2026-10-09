@@ -271,6 +271,16 @@ h2 {
   align-self: start;
   margin-top: 40px;
 }
+.resume-link {
+  margin-top: 12px;
+  font-size: 16px;
+  gap: 12px;
+}
+.resume-format {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
 .section {
   padding-block: 64px;
 }
@@ -400,7 +410,11 @@ h2 {
 .project-overview dl > div + div {
   margin-top: 28px;
 }
-.project-overview > .text-link {
+.project-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   margin-top: 24px;
 }
 .showcase {
@@ -747,7 +761,7 @@ h2 {
   .project-overview dl {
     grid-column: 2;
   }
-  .project-overview > .text-link {
+  .project-actions {
     grid-column: 1;
     grid-row: 4;
     align-self: start;
