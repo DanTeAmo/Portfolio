@@ -271,6 +271,16 @@ h2 {
   align-self: start;
   margin-top: 40px;
 }
+.resume-link {
+  margin-top: 12px;
+  font-size: 16px;
+  gap: 12px;
+}
+.resume-format {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
 .section {
   padding-block: 64px;
 }
