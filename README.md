@@ -30,7 +30,7 @@ Publish the contents of `dist/` to a static web host. No application server, dat
 
 Original assets are retained unchanged. WebP derivatives only compress the original pixels; no retouching or generated replacements. Georgia uses the visitor's system font. PDFs are supplied by the portfolio owner; certificate details were transcribed from those documents, without issuer validation. ASOS project descriptions are the owner's account, not a test report for that separate application.
 
-No analytics, third-party embeds, fake contact form or unprovided live-demo links. Add canonical and Open Graph URLs after the public domain is known.
+No analytics, third-party embeds, fake contact form or unprovided live-demo links. Canonical, Open Graph and Twitter card metadata use the public URL below.
 
 ## Verification
 
@@ -44,3 +44,11 @@ npm run test:performance
 Browser checks cover seven viewport widths, keyboard navigation, native project details, the image viewer, both PDFs, reduced motion and content/navigation without JavaScript. Reports and browser screenshots are written to `test-results/`. Lighthouse uses its simulated mobile profile. Automated checks are not a full screen-reader or WCAG conformance audit.
 
 The mobile menu uses native HTML disclosure so it is usable before hydration and without JavaScript; it does not shift the page on initialization. Inter's Latin subset retains the original variable weights and license. Responsive WebP images let small screens download smaller copies while the gallery opens the full original PNGs.
+
+## Public URL and link preview
+
+Canonical URL: https://portfolio-virid-tau-nq95tudinz.vercel.app/
+
+The source index.html contains canonical, Open Graph and Twitter large-image metadata. public/social-preview.png is a 1200 x 630 card composed from the site's typography, olive palette and the owner's original portrait. public/sitemap.xml lists the single page; public/robots.txt declares the sitemap. The build copies these files into dist and retains metadata in prerendered HTML, so crawlers do not need JavaScript to read it.
+
+If the domain changes, update its absolute URL in index.html, public/sitemap.xml and public/robots.txt together. Social platforms may cache existing link previews after a new deployment.
