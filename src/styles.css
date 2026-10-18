@@ -1223,3 +1223,200 @@ h2 {
 .hero h1 {
   letter-spacing: -0.03em;
 }
+
+/* Full-screen navigation, adapted to Quiet Precision. */
+html {
+  scrollbar-gutter: stable;
+}
+.studio-header {
+  --header-height: 80px;
+}
+.studio-header .header-inner {
+  height: var(--header-height);
+  flex-wrap: nowrap;
+}
+.studio-header .studio-navigation {
+  display: block;
+}
+.studio-header .menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 20px;
+  min-width: 100px;
+  min-height: 48px;
+  padding: 8px 0 8px 12px;
+  font-size: 14px;
+  color: var(--ink);
+}
+.menu-label-close {
+  display: none;
+}
+.studio-navigation[open] .menu-label-open {
+  display: none;
+}
+.studio-navigation[open] .menu-label-close {
+  display: inline;
+}
+.menu-symbol {
+  display: block;
+  position: relative;
+  width: 32px;
+  height: 24px;
+}
+.menu-symbol i {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 32px;
+  height: 1px;
+  background: currentColor;
+  transition:
+    transform 260ms ease,
+    top 260ms ease;
+}
+.menu-symbol i + i {
+  top: 16px;
+}
+.studio-navigation[open] .menu-symbol i {
+  top: 12px;
+  transform: rotate(45deg);
+}
+.studio-navigation[open] .menu-symbol i + i {
+  transform: rotate(-45deg);
+}
+.studio-header .navigation-panel {
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  background: var(--paper);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.navigation-content {
+  min-height: 100%;
+  padding-block: clamp(24px, 5vh, 64px) 32px;
+  display: flex;
+  flex-direction: column;
+}
+.navigation-eyebrow {
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+.studio-header .navigation-panel nav {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  gap: 0;
+  border: 0;
+  background: transparent;
+}
+.studio-header .navigation-panel nav a {
+  display: grid;
+  grid-template-columns: 60px 1fr 64px;
+  gap: 16px;
+  min-height: 70px;
+  padding-block: clamp(10px, 1.5vh, 20px);
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  color: var(--ink);
+  transition: color 180ms ease;
+}
+.studio-header .navigation-panel nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+.navigation-number {
+  font-size: 12px;
+  letter-spacing: 0;
+  color: var(--muted);
+  align-self: center;
+}
+.navigation-arrow {
+  font-size: 0.65em;
+  justify-self: end;
+  transition: transform 220ms ease;
+}
+.studio-header .navigation-panel nav a:hover .navigation-arrow {
+  transform: translate(4px, -4px);
+}
+.studio-header .navigation-panel nav a:focus-visible {
+  outline-offset: -4px;
+}
+.navigation-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 24px;
+  padding-top: 40px;
+  margin-top: auto;
+}
+.navigation-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+.navigation-footer .small-label {
+  font-size: 12px;
+  margin: 0;
+}
+.navigation-utilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+}
+@media (max-width: 1023px) {
+  .studio-header {
+    --header-height: 68px;
+  }
+  .studio-header .navigation-panel nav a {
+    grid-template-columns: 36px 1fr 40px;
+  }
+}
+@media (max-width: 767px) {
+  .studio-header .menu-toggle {
+    min-width: 80px;
+    gap: 12px;
+  }
+  .navigation-content {
+    padding-block: 24px;
+  }
+  .navigation-eyebrow {
+    font-size: 10px;
+    margin-bottom: 12px;
+  }
+  .studio-header .navigation-panel nav a {
+    grid-template-columns: 24px 1fr 28px;
+    gap: 12px;
+    min-height: 60px;
+    font-size: clamp(28px, 8vw, 38px);
+  }
+  .navigation-footer {
+    flex-direction: column;
+    align-items: start;
+    gap: 16px;
+    padding-top: 32px;
+  }
+  .navigation-footer a {
+    font-size: 13px;
+  }
+  .navigation-utilities {
+    gap: 8px 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-symbol i,
+  .navigation-arrow,
+  .studio-header .navigation-panel nav a {
+    transition: none;
+  }
+}
