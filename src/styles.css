@@ -1420,3 +1420,34 @@ html {
     transition: none;
   }
 }
+
+/* Blend the closed header as one layer with the page behind it. */
+.studio-header {
+  background: transparent;
+}
+.studio-header .header-inner {
+  border-bottom: 0;
+}
+@supports (mix-blend-mode: difference) {
+  .studio-header {
+    mix-blend-mode: difference;
+  }
+  .studio-header .wordmark,
+  .studio-header .menu-toggle {
+    color: #fff;
+  }
+  .studio-header .wordmark:focus-visible,
+  .studio-header .menu-toggle:focus-visible {
+    outline-color: #fff;
+  }
+}
+/* The expanded navigation keeps its paper surface and normal text colours. */
+.studio-header:has(.studio-navigation[open]) {
+  mix-blend-mode: normal;
+  background: var(--paper);
+}
+.studio-header:has(.studio-navigation[open]) .wordmark,
+.studio-header:has(.studio-navigation[open]) .menu-toggle {
+  color: var(--ink);
+  outline-color: var(--accent);
+}
