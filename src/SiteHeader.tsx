@@ -10,6 +10,47 @@ export function SiteHeader() {
   const menu = useRef<HTMLElement>(null);
   const animation = useRef<Animation | null>(null);
   const desiredOpen = useRef(false);
+  const desktopNav = useRef<HTMLElement>(null);
+  const activeLink = useRef<HTMLAnchorElement | null>(null);
+
+  function positionIndicator(link: HTMLAnchorElement | null) {
+    const nav = desktopNav.current;
+    if (!nav) return;
+    activeLink.current = link;
+    if (!link || !nav.getClientRects().length) {
+      activeLink.current = null;
+      nav.removeAttribute("data-line-visible");
+      return;
+    }
+    const bounds = link.getBoundingClientRect();
+    const navBounds = nav.getBoundingClientRect();
+    nav.style.setProperty(
+      "--navigation-line-x",
+      `${bounds.left - navBounds.left + (bounds.width - 20) / 2}px`,
+    );
+    nav.setAttribute("data-line-visible", "");
+  }
+
+  function retainFocusedIndicator() {
+    const focused = document.activeElement;
+    positionIndicator(
+      focused instanceof HTMLAnchorElement &&
+        focused.parentElement === desktopNav.current
+        ? focused
+        : null,
+    );
+  }
+
+  useEffect(() => {
+    const nav = desktopNav.current;
+    if (!nav) return;
+    const observer = new ResizeObserver(() =>
+      positionIndicator(activeLink.current),
+    );
+    observer.observe(nav);
+    nav.querySelectorAll("a").forEach((link) => observer.observe(link));
+    return () => observer.disconnect();
+  }, []);
 
   function setMenu(next: boolean, immediate = false) {
     const details = disclosure.current;
@@ -149,16 +190,36 @@ export function SiteHeader() {
         >
           Daniel Rusnac.
         </a>
-        <nav className="desktop-navigation" aria-label="Main navigation">
+        <nav
+          ref={desktopNav}
+          className="desktop-navigation"
+          aria-label="Main navigation"
+          data-animated={enhanced ? "true" : undefined}
+          onPointerLeave={retainFocusedIndicator}
+          onBlur={(event) => {
+            const next = event.relatedTarget;
+            if (
+              !(next instanceof HTMLAnchorElement) ||
+              next.parentElement !== desktopNav.current
+            )
+              positionIndicator(null);
+          }}
+        >
           {navigation.map((item) => (
             <a
               key={item}
               href={`#${item.toLowerCase()}`}
+              onPointerEnter={(event) => {
+                if (event.pointerType !== "touch")
+                  positionIndicator(event.currentTarget);
+              }}
+              onFocus={(event) => positionIndicator(event.currentTarget)}
               onClick={(event) => navigate(event, item.toLowerCase())}
             >
               {item}
             </a>
           ))}
+          <span className="navigation-indicator" aria-hidden="true" />
         </nav>
         <details
           ref={disclosure}
