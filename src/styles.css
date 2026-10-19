@@ -1558,3 +1558,49 @@ html {
     transition: none;
   }
 }
+
+/* Compact rectangular categories with a separate contact action. */
+.studio-header .desktop-navigation {
+  justify-content: flex-start;
+  gap: 4px;
+  margin-left: clamp(24px, 5vw, 72px);
+  min-width: 0;
+}
+.studio-header .desktop-navigation a {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  border-radius: 2px;
+  background: rgb(32 37 31 / 7%);
+  font-size: clamp(14px, 1.25vw, 18px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  transition: background-color 220ms ease;
+}
+.studio-header .desktop-navigation a:hover,
+.studio-header .desktop-navigation a:focus-visible {
+  background: rgb(32 37 31 / 16%);
+}
+.studio-header .desktop-navigation .navigation-contact {
+  margin-left: auto;
+}
+@supports (mix-blend-mode: difference) {
+  .studio-header .desktop-navigation a {
+    background: rgb(255 255 255 / 10%);
+  }
+  .studio-header .desktop-navigation a:hover,
+  .studio-header .desktop-navigation a:focus-visible {
+    background: rgb(255 255 255 / 20%);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .studio-header .header-inner {
+    gap: 20px;
+  }
+  .studio-header .desktop-navigation {
+    margin-left: 16px;
+  }
+  .studio-header .desktop-navigation a {
+    padding-inline: 8px;
+  }
+}

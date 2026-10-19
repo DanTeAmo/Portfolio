@@ -208,6 +208,7 @@ export function SiteHeader() {
           {navigation.map((item) => (
             <a
               key={item}
+              className={item === "Contact" ? "navigation-contact" : undefined}
               href={`#${item.toLowerCase()}`}
               onPointerEnter={(event) => {
                 if (event.pointerType !== "touch")
