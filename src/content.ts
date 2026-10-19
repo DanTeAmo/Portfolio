@@ -1,9 +1,14 @@
-export const navigation = [
-  "About",
-  "Skills",
-  "Projects",
-  "Education",
-  "Contact",
+export const navigation = ["Projects", "About", "Contact"];
+
+// Add verified projects here; the collection grows without invented case studies.
+export const collection = [
+  {
+    id: "personal-portfolio",
+    number: "02",
+    title: "Personal portfolio",
+    role: "Design direction / Development with AI assistance",
+    url: "https://github.com/DanTeAmo/Portfolio",
+  },
 ];
 export const about = [
   "I'm Daniel Rusnac, an Information Security student at the Technical University of Moldova.",

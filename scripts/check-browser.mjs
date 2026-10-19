@@ -22,7 +22,8 @@ try {
   await page.goto(base);
   await page.evaluate(() => document.fonts.ready);
   assert.equal(await page.locator("h1").count(), 1);
-  assert.equal(await page.locator("main section").count(), 6);
+  for (const id of ["home", "projects", "about", "contact", "education", "skills"])
+    assert.equal(await page.locator(`#${id}`).count(), 1);
   const accessibility = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"])
     .analyze();
@@ -90,15 +91,15 @@ try {
   report.interactions.push(
     "Mobile menu: Escape, focus return, anchor selection",
   );
-  const details = page.locator(".project-details");
+  const details = page.locator(".ep-notes");
   await details.locator("summary").focus();
   await page.keyboard.press("Enter");
   assert.equal(await details.getAttribute("open"), "");
-  assert.equal(await details.locator("li").count(), 7);
+  assert.ok((await details.innerText()).includes("Not affiliated with or endorsed by ASOS"));
   await page.keyboard.press("Space");
   assert.equal(await details.getAttribute("open"), null);
   report.interactions.push(
-    "Native details: Enter/Space and complete project features",
+    "Native details: Enter/Space and honest project scope",
   );
   const opener = page.getByRole("link", {
     name: "Open image: categories",
@@ -175,16 +176,16 @@ try {
     viewport: { width: 390, height: 844 },
   });
   await plain.goto(base);
-  assert.equal(await plain.locator("h1").innerText(), "Daniel\nRusnac.");
+  assert.equal(await plain.locator("h1").innerText(), "Daniel Rusnac.");
   await plain.locator(".menu-toggle").click();
   assert.equal(
     await plain.getByRole("navigation").getByRole("link").count(),
-    5,
+    3,
   );
   await plain.locator(".menu-toggle").click();
-  await plain.locator(".project-details summary").click();
+  await plain.locator(".ep-notes summary").click();
   assert.equal(
-    await plain.locator(".project-details").getAttribute("open"),
+    await plain.locator(".ep-notes").getAttribute("open"),
     "",
   );
   assert.ok(

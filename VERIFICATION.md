@@ -49,3 +49,6 @@
 Повторный Lighthouse: Performance 99, Accessibility 100, Best Practices 100, SEO 100; FCP 1,4 с, LCP 1,8 с, TBT 0 мс, CLS 0. Ограничения лабораторного замера и ещё не выполненные ручные проверки остаются указанными выше.
 
 Папка dist подготовлена к размещению на статическом хостинге. Публичная публикация и отправка изменений в GitHub пока не выполнялись.
+# Historical baseline
+
+The checks below describe the previous design. They are retained as history and are not a verification report for Editorial Presence. See IMPLEMENTATION.md for the current build and checks.

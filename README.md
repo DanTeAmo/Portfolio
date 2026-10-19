@@ -1,6 +1,6 @@
 # Daniel Rusnac — Portfolio
 
-Quiet Precision portfolio built with React, TypeScript, Vite and CSS. The production build includes prerendered HTML, so the content, navigation, project details, images and certificate links remain usable without JavaScript.
+Editorial Presence portfolio built with React, TypeScript, Vite and CSS. The production build includes prerendered HTML, so the content, navigation, project details, images and certificate links remain usable without JavaScript. The approved direction uses an asymmetric project collection, prominent typography and a soft black (#141414) process/profile chapter. See IMPLEMENTATION.md for the current design and verification notes.
 
 ## Local development
 
@@ -23,12 +23,13 @@ Publish the contents of `dist/` to a static web host. No application server, dat
 ## Editing
 
 - `src/content.ts`: skills, about text, project, screenshot descriptions and credentials.
-- `src/PortfolioPage.tsx`: six sections, hero and contact copy, navigation and disclosure.
+- `src/PortfolioPage.tsx`: introduction, project collection, statement, process, profile and contact.
 - `src/ImageViewer.tsx`: accessible native image dialog, keyboard navigation and zoom.
-- `src/styles.css`: typography, olive palette, layout and responsive rules.
+- `src/styles.css`: retained navigation and image viewer styles; shared fallbacks.
+- `src/editorial.css`, `src/production.css`: approved monochrome palette, editorial composition, responsive layouts and interaction states.
 - `public/assets/`: original photographs/screenshots, optimized WebP derivatives, certificates, local Inter and its license.
 
-Original assets are retained unchanged. WebP derivatives only compress the original pixels; no retouching or generated replacements. Georgia uses the visitor's system font. PDFs are supplied by the portfolio owner; certificate details were transcribed from those documents, without issuer validation. ASOS project descriptions are the owner's account, not a test report for that separate application.
+Original assets are retained unchanged. WebP derivatives only compress the original pixels; no retouching or generated replacements. Inter is served locally. PDFs are supplied by the portfolio owner; certificate details were transcribed from those documents, without issuer validation. ASOS project descriptions are the owner's account, not a test report for that separate application.
 
 No analytics, third-party embeds, fake contact form or unprovided live-demo links. Canonical, Open Graph and Twitter card metadata use the public URL below.
 

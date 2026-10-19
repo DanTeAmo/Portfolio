@@ -210,7 +210,7 @@ export function SiteHeader() {
     if (!open) return;
     const background = [
       ...document.querySelectorAll<HTMLElement>(
-        "main, body > #root > footer, #root > .contact-band",
+        "main, #ep-next > footer",
       ),
     ];
     const previous = background.map((el) => el.inert);
@@ -256,7 +256,7 @@ export function SiteHeader() {
     event.preventDefault();
     setMenu(false, true);
     // Release background before moving focus to the selected section.
-    document.querySelectorAll<HTMLElement>("main[inert]").forEach((el) => {
+    document.querySelectorAll<HTMLElement>("main[inert], #ep-next > footer[inert]").forEach((el) => {
       el.inert = false;
     });
     history.pushState(null, "", `#${id}`);
