@@ -64,8 +64,17 @@ export function SiteHeader() {
       if (reduced.matches) setMenu(desiredOpen.current, true);
     };
     reduced.addEventListener("change", settle);
+    const desktop = matchMedia("(min-width: 768px)");
+    const resize = () => {
+      if (!desktop.matches) return;
+      if (disclosure.current?.contains(document.activeElement))
+        header.current?.querySelector<HTMLElement>(".wordmark")?.focus();
+      setMenu(false, true);
+    };
+    desktop.addEventListener("change", resize);
     return () => {
       reduced.removeEventListener("change", settle);
+      desktop.removeEventListener("change", resize);
       animation.current?.cancel();
     };
   }, []);
@@ -140,6 +149,17 @@ export function SiteHeader() {
         >
           Daniel Rusnac.
         </a>
+        <nav className="desktop-navigation" aria-label="Main navigation">
+          {navigation.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              onClick={(event) => navigate(event, item.toLowerCase())}
+            >
+              {item}
+            </a>
+          ))}
+        </nav>
         <details
           ref={disclosure}
           className="mobile-navigation studio-navigation"

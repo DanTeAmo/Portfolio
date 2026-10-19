@@ -1451,3 +1451,49 @@ html {
   color: var(--ink);
   outline-color: var(--accent);
 }
+
+/* Inline navigation on larger screens; full-screen menu on phones. */
+.studio-header .desktop-navigation {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-left: clamp(24px, 6vw, 96px);
+  padding: 0;
+  width: auto;
+}
+.studio-header .desktop-navigation a {
+  font-size: 15px;
+  color: var(--ink);
+}
+@supports (mix-blend-mode: difference) {
+  .studio-header .desktop-navigation a {
+    color: #fff;
+  }
+  .studio-header .desktop-navigation a:focus-visible {
+    outline-color: #fff;
+  }
+}
+@media (min-width: 768px) {
+  .studio-header .studio-navigation {
+    display: none;
+  }
+  .studio-header:has(.studio-navigation[open]) {
+    background: transparent;
+  }
+  @supports (mix-blend-mode: difference) {
+    .studio-header:has(.studio-navigation[open]) {
+      mix-blend-mode: difference;
+    }
+    .studio-header:has(.studio-navigation[open]) .wordmark {
+      color: #fff;
+      outline-color: #fff;
+    }
+  }
+}
+@media (max-width: 767px) {
+  .studio-header .desktop-navigation {
+    display: none;
+  }
+}
